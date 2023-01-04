@@ -134,7 +134,9 @@ Now you can see the final application build.
 
 ## You can also run main.pyw in idle also (Without packaging using PyInstaller).
 
-## An application With default (MySQL-user,passwd and Application Passcode) is installed in distribution folder in the repository.
+## An application With default (MySQL-user,passwd and Application Passcode) is installed in distribution folder in the repository. (Not Yet published)
+
+
 
 
 

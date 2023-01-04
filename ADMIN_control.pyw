@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 import csv
 from tkinter.filedialog import asksaveasfile
 import random
-from apscheduler.schedulers.background import BlockingScheduler
-import time
 
 mydb=mysql.connector.connect(host='localhost',user='root',passwd='tiger')
 mycursor=mydb.cursor()
@@ -515,10 +513,6 @@ credit=Label(cred,text='''Project Done By: ADARSH PR, KARTHIK KRISHNA, RIYA RAJE
                              KENDRIYA VIDYALAYA KALPETTA
                                         Year : 2022-2023''')
 credit.pack(side='right',anchor='e')
-
-'''sched = BlockingScheduler()
-sched.add_job(realtime, 'interval', seconds =5)
-sched.start()'''
 
 window.mainloop()
 
