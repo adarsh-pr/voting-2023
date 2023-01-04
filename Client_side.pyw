@@ -85,15 +85,15 @@ def name_admn():
                 mycursor.execute(insert)
                 mydb.commit()
             except:
-                canvas.destroy()
+                flag=1
                 messagebox.showinfo('SORRY','YOU HAVE ALREADY VOTED')
                 winsound.Beep(1000,1000)
         else:
-            canvas.destroy()
+            flag=1
             winsound.Beep(1000,1000)
             messagebox.showerror('Entry error','Invalid admission number')
     else:
-        canvas.destroy()
+        flag=1
         winsound.Beep(1000,1000)
         messagebox.showerror('Name error','Enter your details')
 def value():
@@ -103,67 +103,71 @@ def value():
     mydb.commit()
 
 def start():
+    if flag == 0:
+        fig = Toplevel()
+        fig.geometry('480x480')
+        fig.title('SESSION')
 
-    fig = Toplevel()
-    fig.geometry('480x480')
-    fig.title('SESSION')
+        post_n=last[0][0]
+        post_nn=post_n.upper()
+        post_name_l = Label(master=fig , text=post_nn,).pack(pady=40)
+        buttons = Frame(fig)
+        buttons.pack()
+        for v in last[0][1]:
+            Radiobutton(buttons, text=v,variable=opted,value=v).grid(sticky='W',pady=3) 
 
-    post_n=last[0][0]
-    post_nn=post_n.upper()
-    post_name_l = Label(master=fig , text=post_nn,).pack(pady=40)
-    buttons = Frame(fig)
-    buttons.pack()
-    for v in last[0][1]:
-        Radiobutton(buttons, text=v,variable=opted,value=v).grid(sticky='W',pady=3) 
+        def reset():
+            for widget in fig.winfo_children():
+                if not isinstance(widget, Button):
+                    widget.destroy()
 
-    def reset():
-        for widget in fig.winfo_children():
-            if not isinstance(widget, Button):
-                widget.destroy()
+        def op():
+            global i
+            try:
+                a=namevariable.get()
+                na=a.capitalize()
+                name='Current Session : '+na
+                session_label =Label(fig,text=name,font=("Candara light",12))
+                session_label.pack(side="top",anchor=W)
+                datframe=Frame(fig)
+                post_n=last[i][0]
+                post_nn=post_n.upper()
+                post_name_l = Label(master=fig, text=post_nn).pack(pady=40)
+                datframe.pack()
+                for v in last[i][1]:
+                    Radiobutton(datframe, text=v,variable=opted,value=v).grid(sticky='W',pady=3)
 
-    def op():
-        global i
-        try:
-            a=namevariable.get()
-            na=a.capitalize()
-            name='Current Session : '+na
-            session_label =Label(fig,text=name,font=("Candara light",12))
-            session_label.pack(side="top",anchor=W)
-            datframe=Frame(fig)
-            post_n=last[i][0]
-            post_nn=post_n.upper()
-            post_name_l = Label(master=fig, text=post_nn).pack(pady=40)
-            datframe.pack()
-            for v in last[i][1]:
-                Radiobutton(datframe, text=v,variable=opted,value=v).grid(sticky='W',pady=3)
+            except:
+                value()
+                i = 0
+                e1.delete("0","end")
+                e2.delete("0","end")
+                winsound.Beep(1000,500)
+                fig.destroy()
 
-        except:
-            value()
-            i = 0
-            e1.delete("0","end")
-            e2.delete("0","end")
-            winsound.Beep(1000,500)
-            fig.destroy()
-
-    def retrieve():
-            opt=opted.get()
-            global votelist
-            votelist.append(opt)
-            mycursor.execute("use projectx;")
-            query = "update {} set vote = vote + 1 where name = '{}'".format(str(last[i-1][0]),str(votelist[i-1]))
-            mycursor.execute(query)
-            mydb.commit()
-    
-    a=namevariable.get()
-    na=a.capitalize()
-    name='Current Session : '+na
-    session_label =Label(fig,text=name,font=("Candara light",12))
-    next_b = Button(master = fig, command = lambda : [reset(),nex(),op(),retrieve()],height = 2, width = 10,text = "NEXT")
-    session_label.pack(side="bottom",anchor=W)
-    next_b.pack(side='bottom',pady=40)
+        def retrieve():
+                opt=opted.get()
+                global votelist
+                votelist.append(opt)
+                mycursor.execute("use projectx;")
+                query = "update {} set vote = vote + 1 where name = '{}'".format(str(last[i-1][0]),str(votelist[i-1]))
+                mycursor.execute(query)
+                mydb.commit()
+        
+        a=namevariable.get()
+        na=a.capitalize()
+        name='Current Session : '+na
+        session_label =Label(fig,text=name,font=("Candara light",12))
+        next_b = Button(master = fig, command = lambda : [reset(),nex(),op(),retrieve()],height = 2, width = 10,text = "NEXT")
+        session_label.pack(side="bottom",anchor=W)
+        next_b.pack(side='bottom',pady=40)
+    else:
+        pass
 
 
 def chng_dbs():
+    global flag
+    flag = 0
     mycursor.execute("use projectx;")
         
 def nex():
