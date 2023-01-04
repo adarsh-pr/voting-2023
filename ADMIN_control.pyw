@@ -282,6 +282,7 @@ def modify():
                     mod.destroy()
 
             button = Button( mod ,relief='flat', text = "Confirm" , command = nex ).pack(pady=10)
+            close()
         else:
             mod.destroy()
             messagebox.showerror('Delete error','No Data found!')
@@ -296,6 +297,7 @@ def modify():
                 mycursor.execute(query)
                 messagebox.showinfo('Delete message','Database deleted!')
                 mod.destroy()
+                close()
             except:
                 messagebox.showerror('Delete error','No Database found!')
                 mod.destroy()
@@ -315,6 +317,7 @@ def modify():
                 mycursor.execute(query)
                 mod.destroy()
                 messagebox.showinfo('Delete message','List deleted!')
+                close()
             else:
                 mod.destroy()
     
