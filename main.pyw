@@ -17,7 +17,6 @@ window.option_add("*Text.foreground", "White")
 window.option_add("*OptionMenu.foreground", "White")
 window.option_add("*Entry.foreground", "White")
 
-
 code =1080
 
 namevariable = StringVar()

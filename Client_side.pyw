@@ -194,4 +194,7 @@ e2.grid(row=1,column=1)
 start_b = Button(master = canvas, command = lambda : [name_admn(),start(),chng_dbs()],height = 2, width = 10,text = "START")
 start_b.pack(pady=40)
 
+
+
+
 canvas.mainloop()
