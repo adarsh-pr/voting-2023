@@ -5,9 +5,10 @@ from tkinter import messagebox
 window = Tk()
 window.title('VOTING SYSTEM LOGIN')
 window.geometry("480x480")
+icon=PhotoImage(file="logo.png")
+window.iconphoto(False,icon)
 window.resizable(False,False)
 window.configure(background='#181818')
-
 window.option_add("*Font", ("Consolas Bold",12))
 window.option_add("*Background", "#181818")
 window.option_add("*Button.Background", "#404040")

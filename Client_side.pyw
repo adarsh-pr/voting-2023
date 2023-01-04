@@ -12,6 +12,8 @@ mycursor=mydb.cursor()
 canvas=Tk()
 canvas.title("Voting")
 canvas.geometry("480x480")
+icon=PhotoImage(file="logo.png")
+canvas.iconphoto(False,icon)
 canvas.resizable(False,False)
 canvas.configure(background='#181818')
 
@@ -107,6 +109,8 @@ def start():
         fig = Toplevel()
         fig.geometry('480x480')
         fig.title('SESSION')
+        icon=PhotoImage(file="logo.png")
+        fig.iconphoto(False,icon)
 
         post_n=last[0][0]
         post_nn=post_n.upper()
@@ -193,8 +197,6 @@ e2.grid(row=1,column=1)
 
 start_b = Button(master = canvas, command = lambda : [name_admn(),start(),chng_dbs()],height = 2, width = 10,text = "START")
 start_b.pack(pady=40)
-
-
 
 
 canvas.mainloop()
