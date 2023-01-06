@@ -303,7 +303,6 @@ def modify():
         postname=[]
         for i in mycursor:
             postname.append(i[0])
-        print(postname)
         if postname != []:
             clicked = StringVar()
             clicked.set( "Select Post Name" )
@@ -339,8 +338,8 @@ def modify():
                 query="drop database projectx;"
                 mycursor.execute(query)
                 shutil.rmtree(final_dir)
-                messagebox.showinfo('Delete message','Database deleted!')
-                mod.destroy()
+                messagebox.showinfo('Database deleted','Please Restart the Application')
+                window.destroy()
             except:
                 messagebox.showerror('Delete error','No Database found!')
                 mod.destroy()
@@ -358,8 +357,8 @@ def modify():
                                                 icon='warning')
             if sg_box == 'yes':
                 mycursor.execute(query)
-                mod.destroy()
-                messagebox.showinfo('Delete message','List deleted!')
+                messagebox.showinfo('List deleted!','Please Restart the Application')
+                window.destroy()
             else:
                 mod.destroy()
 
