@@ -108,15 +108,33 @@ def value():
 
 def start():
     if flag == 0:
-        fig = Toplevel()
-        fig.geometry('720x720')
-        fig.title('SESSION')
+        toplevel = Toplevel()
+        toplevel.geometry('720x720')
+        toplevel.title('SESSION')
         icon=PhotoImage(file="logo.png")
-        fig.iconphoto(False,icon)
+        toplevel.iconphoto(False,icon)
+        figure =Frame(toplevel)
+        figure.pack(expand=True,fill="both")
+        next_frame=Frame(toplevel)
+        next_frame.pack(side=BOTTOM,expand=False,fill='both')
+        Label(next_frame,width=10).pack()
+        align =Frame(figure)
+        align.pack(side=LEFT,expand=True,fill="both")
+        label=Label(align,text="",width=20).pack()
+        mycanvas =Canvas(figure,height=500,width=500)
+        mycanvas.pack(side=LEFT,expand=True,fill="both")
+        v = Scrollbar(figure, orient='vertical')
+        v.pack(side = RIGHT, fill = Y)
+        v.config(command=mycanvas.yview)
+        mycanvas.configure(yscrollcommand=v.set,highlightthickness=0)
+        mycanvas.bind('<Configure>',lambda e:mycanvas.configure(scrollregion=mycanvas.bbox('all')))
+        fig=Frame(mycanvas,pady=10,padx=10)
+        fig.pack_configure(expand=True,fill="both")
+        mycanvas.create_window((0,0),window=fig)
         post_n=last[0][0]
         post_nn=post_n.upper()
-        post_name_l = Label(master=fig , text=post_nn,)
-        post_name_l.pack(pady=10)
+        post_name_l = Label(master=fig , text=post_nn)
+        post_name_l.pack(pady=20,padx=25)
         post_name_l.configure(font=("Consolas Bold",15))
         buttons = Frame(fig)
         buttons.pack()
@@ -125,54 +143,48 @@ def start():
             dire="appCache\{}{}.png".format(post_n,count)
             option=Frame(buttons,highlightbackground='#1B1212',highlightthickness=2)
             option.pack(expand=True,fill="x",pady=3)
-            radio=Radiobutton(option, text=v,variable=opted,value=v)
-            radio.pack(side=LEFT,expand=True,fill="both")
+            Radiobutton(option, text=v,variable=opted,value=v).pack(pady=3,expand=True,fill="x",side=LEFT)
             img = PhotoImage(file=dire)
             img.config(height=100,width=100)
             label=Label(option,text="image",image=img)
             label.image=img
-            label.pack(padx=5,side=LEFT)
+            label.pack(pady=10,padx=5,side=LEFT)
             count=count+1
-        def reset():
-            for widget in fig.winfo_children():
-                if not isinstance(widget, Button):
-                    widget.destroy()
+
         def op():
             global i
             try:
-                a=namevariable.get()
-                na=a.capitalize()
-                name='Current Session : '+na
-                session_label =Label(fig,text=name,font=("Candara light",12))
-                session_label.pack(side="top",anchor=W)
-                datframe=Frame(fig)
+                toplevel.geometry('720x721')
+                mycanvas.delete('all')
+                fig=Frame(mycanvas,pady=10,padx=10)
+                fig.pack_configure(expand=True,fill="both")
+                mycanvas.create_window((0,0),window=fig)
                 post_n=last[i][0]
                 post_nn=post_n.upper()
-                post_name_l = Label(master=fig, text=post_nn)
-                post_name_l.pack(pady=10)
+                post_name_l = Label(master=fig , text=post_nn)
+                post_name_l.pack(pady=20,padx=25)
                 post_name_l.configure(font=("Consolas Bold",15))
-                datframe.pack()
+                buttons = Frame(fig)
+                buttons.pack()
                 count=0
                 for v in last[i][1]:
                     dire="appCache\{}{}.png".format(post_n,count)
-                    option=Frame(datframe,highlightbackground='#1B1212',highlightthickness=2)
+                    option=Frame(buttons,highlightbackground='#1B1212',highlightthickness=2)
                     option.pack(expand=True,fill="x",pady=3)
-                    radio=Radiobutton(option, text=v,variable=opted,value=v)
-                    radio.pack(side=LEFT,expand=True,fill="both")
+                    Radiobutton(option, text=v,variable=opted,value=v).pack(pady=3,expand=True,fill="x",side=LEFT)
                     img = PhotoImage(file=dire)
                     img.config(height=100,width=100)
                     label=Label(option,text="image",image=img)
                     label.image=img
-                    label.pack(padx=5,side=LEFT)
+                    label.pack(pady=10,padx=5,side=LEFT)
                     count=count+1
-
             except:
                 value()
                 i = 0
                 e1.delete("0","end")
                 e2.delete("0","end")
                 winsound.Beep(1000,500)
-                fig.destroy()
+                toplevel.destroy()
                 messagebox.showinfo('Session Closed','Thank You :)')
 
         def retrieve():
@@ -187,10 +199,10 @@ def start():
         a=namevariable.get()
         na=a.capitalize()
         name='Current Session : '+na
-        session_label =Label(fig,text=name,font=("Candara light",12))
-        next_b = Button(master = fig, command = lambda : [reset(),nex(),op(),retrieve()],height = 2, width = 10,text = "NEXT")
+        session_label =Label(next_frame,text=name,font=("Candara light",12))
+        next_b = Button(master = next_frame, command = lambda : [nex(),op(),retrieve()],height = 2, width = 10,text = "NEXT")
         session_label.pack(side="bottom",anchor=W,padx=5,pady=5)
-        next_b.pack(side='bottom',pady=5)
+        next_b.pack(side='bottom')
     else:
         pass
 
