@@ -3,7 +3,7 @@
 
   <h1> Election Voting System Using Python and tkinter</h1>
   
-<sub>Author: <a>Adarsh PR, Karthik Krishna, Riya Rajesh</a><br>
+<sub>Authors: <a>Adarsh PR, Karthik Krishna, Riya Rajesh</a><br>
 <small> January, 2022</small></sub>
 
 </div>
@@ -23,6 +23,7 @@
 To get along with the challenge you need to have the following:
 
 - Motivation
+- Computer running on Windows
 - Python-3
 - MySQL
 - Internet
