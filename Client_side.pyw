@@ -14,7 +14,7 @@ canvas.title("Voting")
 canvas.geometry("480x480")
 icon=PhotoImage(file="logo.png")
 canvas.iconphoto(False,icon)
-#canvas.resizable(False,False)
+canvas.resizable(False,False)
 canvas.configure(background='#181818')
 
 
@@ -111,7 +111,7 @@ def start():
         toplevel.title('SESSION')
         icon=PhotoImage(file="logo.png")
         toplevel.iconphoto(False,icon)
-        #toplevel.resizable(False,False)
+        toplevel.resizable(False,False)
         figure =Frame(toplevel)
         figure.pack(expand=True,fill="both")
         next_frame=Frame(toplevel)
@@ -134,7 +134,7 @@ def start():
         post_nn=post_n.upper()
         post_name_l = Label(master=fig , text=post_nn,)
         post_name_l.pack(pady=20)
-        post_name_l.configure(font=("Consolas Bold",20))
+        post_name_l.configure(font=("Consolas Bold",16))
         buttons = Frame(fig)
         buttons.pack()
         count=0
@@ -161,7 +161,7 @@ def start():
                 post_nn=post_n.upper()
                 post_name_l = Label(master=fig , text=post_nn,)
                 post_name_l.pack(pady=20)
-                post_name_l.configure(font=("Consolas Bold",20))
+                post_name_l.configure(font=("Consolas Bold",16))
                 buttons = Frame(fig)
                 buttons.pack()
                 count=0
