@@ -40,13 +40,15 @@ try:
 except:
     pass
 
-
 mycursor.execute("use projectx;")
-
 mycursor.execute("Show tables;")
 postname=[]
 for i in mycursor:
     postname.append(i[0])
+
+if postname == []:
+    canvas.destroy()
+    messagebox.showerror('No database','Contact Administartor for more information')
 
 m=len(postname)
 s_last=[]
