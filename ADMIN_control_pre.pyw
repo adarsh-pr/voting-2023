@@ -5,18 +5,10 @@ import matplotlib.pyplot as plt
 import csv
 from tkinter.filedialog import asksaveasfile
 import random
-from tkinter.filedialog import askopenfile
-import os
-import shutil
 
 mydb=mysql.connector.connect(host='localhost',user='root',passwd='tiger')
 mycursor=mydb.cursor()
 
-curr_dir = os.getcwd()
-final_dir = os.path.join(curr_dir, r'appCache')
-
-if not os.path.exists(final_dir):
-    os.makedirs(final_dir,mode = 0o666)
 
 try:
     mycursor.execute("use PROJECTX")
@@ -30,6 +22,8 @@ window.geometry("1200x720")
 window.resizable(False,False)
 window.configure(background='#181818')
 window.attributes('-fullscreen', True)
+#"Queental"
+#"Consolas Bold",14
 window.option_add("*Font", ("Consolas Bold",14))
 window.option_add("*Background", "#181818")
 window.option_add("*Button.Background", "#404040")
@@ -55,7 +49,6 @@ def add():
     top=Toplevel()
     top.title('Create')
     top.geometry('480x480')
-    top.lift(window)
 
     topframe=Frame(top)
     topframe.pack(padx=10,pady=10,ipadx=10)   
@@ -78,61 +71,29 @@ def add():
             messagebox.showerror('Error, Try again',"Couldn't create post!")
 
         else:
-            
             topp=Toplevel()
             titl=name_post.title()
             topp.title(titl)
             topp.geometry('480x480')
-            top.lower(window)
-            ch=titl.lower()
-            chg=ch.replace(" ","_")
-            can_name=""
-            def select():
-                cand_name=cand1.get()
-                cand_name=cand_name.upper()
-                global can_name
-                can_name=cand_name
-                if cand_name:
-                    files = [('Png Files', '*.png'), 
-                    ('All Files', '*.*')]
-                    fil = askopenfile(filetypes = files, defaultextension = '.png',title='Candidate Symbol')
-                    topp.lift(window)
-                    if fil:
-                        source=fil.name
-                        fil.close()
-                        nonlocal count
-                        dest="appCache/{}{}.png".format(chg,str(count))
-                        shutil.copy(source,dest)
-                        next_b.config(text='Add',state='normal')
-                        symbo.config(text='Symbol Uploaded !',state='disabled')
-                    else:
-                        messagebox.showerror('Error, Try again',"Select A Candidate Symbol")
-                else:
-                    messagebox.showerror('Error, Try again',"Type Candidate name")
-                    topp.lift(window)
-
+            
             postlist=[] 
             count=0
             cand_id = 'CID'+ str(count)
             curr_vote=0
             cand_name_l = Label(master=topp , text="NAME OF THE CANDIDATE").pack(pady = 10)
             cand_name_e = Entry(master = topp,textvariable=cand1 ).pack(pady = 10)
-            symbo = Button(master = topp, relief='flat',command = select,height = 1, width = 23,font=("Consolas Bold",12),text = "Select Candidate Symbol")
-            symbo.pack(padx = 60,pady=10)
 
             def nex():
                 nonlocal count
                 count = count+1
                 cand_id = 'CID'+ str(count)
-                symbo.config(text="Select Candidate Symbol",state='normal')
-                next_b.config(text="Candidate Added !",state='disabled')
-                if count>1:
-                    submit_b.config(state='normal')
-                if can_name != '':
+                cand_name=cand1.get()
+                cand_name=cand_name.upper()
+                if cand_name != '':
                     name_p=name_post.replace(" ","_")
-                    value_table="insert into {} values('{}','{}',{});".format(name_p,can_name,cand_id,curr_vote)
+                    value_table="insert into {} values('{}','{}',{});".format(name_p,cand_name,cand_id,curr_vote)
                     mycursor.execute(value_table)
-                    postlist.append([can_name,cand_id,curr_vote])
+                    postlist.append([cand_name,cand_id,curr_vote])
                 else:
                     pass
 
@@ -140,25 +101,15 @@ def add():
                 for widget in topp.winfo_children():
                     if isinstance(widget, Entry):
                         widget.delete(0,'end')
-
-            def lift():
-                top.lift(window)
-            
-            next_b = Button(master = topp,relief='flat',command =lambda: [nex(),reset()],state='disabled', height =1 , width = 25,text = "Add")
-            next_b.pack(pady = 10)
-            submit_b = Button(master = topp,relief='flat',command =lambda: [nex(),topp.destroy(),lift()],state='disabled', height = 1, width = 25,text = "Proceed to next post")
-            submit_b.pack(pady = 10)
-            finish_b.config(state='normal')
+            next_b = Button(master = topp,relief='flat',command =lambda: [nex(),reset()], height = 2, width = 10,text = "ADD").pack(pady = 10)
+            submit_b = Button(master = topp,relief='flat',command =lambda: [nex(),topp.destroy()], height = 2, width = 10,text = "FINISH").pack(pady = 10)
             topp.mainloop()
-            
     
     bottomframe=Frame(top)
     bottomframe.pack(padx=10,pady=10,ipadx=10,ipady=50)
 
-    create_b = Button(master = bottomframe, relief='flat',command = Create,height = 1, width = 10,text = "Create post")
-    create_b.pack(side = LEFT,padx = 60)
-    finish_b = Button(master = bottomframe, relief='flat',command = top.destroy,state='disabled',height = 1, width = 00,text = "Finish")
-    finish_b.pack(side = LEFT,padx = 60)
+    create_b = Button(master = bottomframe, relief='flat',command = Create,height = 2, width = 10,text = "CREATE").pack(side = LEFT,padx = 60)
+    submit_b = Button(master = bottomframe, relief='flat',command = top.destroy,height = 2, width = 10,text = "SUBMIT").pack(side = LEFT,padx = 60)
     
     topframe.mainloop()
     bottomframe.mainloop()
@@ -302,6 +253,7 @@ def modify():
 
 
     def d_post():
+
         mycursor.execute("use projectx;")
         mycursor.execute("Show tables;")
         postname=[]
@@ -324,11 +276,11 @@ def modify():
                     query="drop table {} ;".format(de)
                     mycursor.execute(query)
                     messagebox.showinfo('Delete message','Post deleted!')
-                    mod.destroy()
                 else:
                     mod.destroy()
 
             button = Button( mod ,relief='flat', text = "Confirm" , command = nex ).pack(pady=10)
+            close()
         else:
             mod.destroy()
             messagebox.showerror('Delete error','No Data found!')
@@ -341,7 +293,6 @@ def modify():
                 mycursor.execute("use projectx;")
                 query="drop database projectx;"
                 mycursor.execute(query)
-                shutil.rmtree(final_dir)
                 messagebox.showinfo('Delete message','Database deleted!')
                 mod.destroy()
                 close()
@@ -533,7 +484,6 @@ cred.pack(padx=10,pady=10,side=BOTTOM)
 realt=Label(heading,text="Realtime View")
 realt.pack(pady=10)
 realt.configure(font =("Queental",18))
-
 
 add_b = Button(master = buttonframe1, command = add,relief='flat',height = 2, width = 25,text = "Create").pack(padx=25,pady = 10)
 result_b = Button(master = buttonframe1, command = result,relief='flat',height = 2, width = 25,text = "Result").pack(padx=25,pady = 10)

@@ -1,7 +1,7 @@
 import mysql.connector
 from tkinter import *
 from tkinter import messagebox
-#from PIL import ImageTk, Image
+
 import winsound
 
 
@@ -18,7 +18,7 @@ canvas.resizable(False,False)
 canvas.configure(background='#181818')
 
 
-canvas.option_add("*Font", ("Consolas Bold",13))
+canvas.option_add("*Font", ("Consolas Bold",12))
 canvas.option_add("*Background", "#181818")
 canvas.option_add("*Button.Background", "#404040")
 canvas.option_add("*Button.foreground", "White")
@@ -106,84 +106,48 @@ def value():
 
 def start():
     if flag == 0:
-        toplevel = Toplevel()
-        toplevel.geometry('720x720')
-        toplevel.title('SESSION')
+        fig = Toplevel()
+        fig.geometry('480x480')
+        fig.title('SESSION')
         icon=PhotoImage(file="logo.png")
-        toplevel.iconphoto(False,icon)
-        toplevel.resizable(False,False)
-        figure =Frame(toplevel)
-        figure.pack(expand=True,fill="both")
-        next_frame=Frame(toplevel)
-        next_frame.pack(side=BOTTOM,expand=False,fill='both')
-        Label(next_frame,width=10).pack()
-        v = Scrollbar(figure, orient='vertical')
-        v.pack(side = RIGHT, fill = Y)
-        align =Frame(figure)
-        align.pack(side=LEFT,expand=True,fill="both")
-        label=Label(align,text="",width=20).pack()
-        mycanvas =Canvas(figure)
-        mycanvas.pack(side=RIGHT,expand=True,fill="both")
-        v.config(command=mycanvas.yview)
-        mycanvas.configure(yscrollcommand=v.set,highlightthickness=0)
-        mycanvas.bind('<Configure>',lambda e:mycanvas.configure(scrollregion=mycanvas.bbox('all')))
-        fig=Frame(mycanvas,pady=10,padx=10)
-        fig.pack_configure(expand=True,fill="both")
-        mycanvas.create_window((0,0),window=fig)
+        fig.iconphoto(False,icon)
+
         post_n=last[0][0]
         post_nn=post_n.upper()
-        post_name_l = Label(master=fig , text=post_nn,)
-        post_name_l.pack(pady=20)
-        post_name_l.configure(font=("Consolas Bold",20))
+        post_name_l = Label(master=fig , text=post_nn,).pack(pady=40)
         buttons = Frame(fig)
         buttons.pack()
-        count=0
         for v in last[0][1]:
-            dire="appCache\{}{}.png".format(post_n,count)
-            option=Frame(buttons,highlightbackground='#1B1212',highlightthickness=2)
-            option.pack(expand=True,fill="x",pady=3)
-            Radiobutton(option, text=v,variable=opted,value=v).pack(pady=3,expand=True,fill="x",side=LEFT)
-            img = PhotoImage(file=dire)
-            img.config(height=100,width=100)
-            label=Label(option,text="image",image=img)
-            label.image=img
-            label.pack(pady=10,padx=5,side=LEFT)
-            count=count+1
+            Radiobutton(buttons, text=v,variable=opted,value=v).grid(sticky='W',pady=3) 
+
+        def reset():
+            for widget in fig.winfo_children():
+                if not isinstance(widget, Button):
+                    widget.destroy()
 
         def op():
             global i
             try:
-                mycanvas.delete('all')
-                fig=Frame(mycanvas,pady=10,padx=10)
-                fig.pack_configure(expand=True,fill="both")
-                mycanvas.create_window((0,0),window=fig)
+                a=namevariable.get()
+                na=a.capitalize()
+                name='Current Session : '+na
+                session_label =Label(fig,text=name,font=("Candara light",12))
+                session_label.pack(side="top",anchor=W)
+                datframe=Frame(fig)
                 post_n=last[i][0]
                 post_nn=post_n.upper()
-                post_name_l = Label(master=fig , text=post_nn,)
-                post_name_l.pack(pady=20)
-                post_name_l.configure(font=("Consolas Bold",20))
-                buttons = Frame(fig)
-                buttons.pack()
-                count=0
+                post_name_l = Label(master=fig, text=post_nn).pack(pady=40)
+                datframe.pack()
                 for v in last[i][1]:
-                    dire="appCache\{}{}.png".format(post_n,count)
-                    option=Frame(buttons,highlightbackground='#1B1212',highlightthickness=2)
-                    option.pack(expand=True,fill="x",pady=3)
-                    Radiobutton(option, text=v,variable=opted,value=v).pack(pady=3,expand=True,fill="x",side=LEFT)
-                    img = PhotoImage(file=dire)
-                    img.config(height=100,width=100)
-                    label=Label(option,text="image",image=img)
-                    label.image=img
-                    label.pack(pady=10,padx=5,side=LEFT)
-                    count=count+1
+                    Radiobutton(datframe, text=v,variable=opted,value=v).grid(sticky='W',pady=3)
+
             except:
                 value()
                 i = 0
                 e1.delete("0","end")
                 e2.delete("0","end")
                 winsound.Beep(1000,500)
-                toplevel.destroy()
-                messagebox.showinfo('Session Closed','Thank You :)')
+                fig.destroy()
 
         def retrieve():
                 opt=opted.get()
@@ -197,10 +161,10 @@ def start():
         a=namevariable.get()
         na=a.capitalize()
         name='Current Session : '+na
-        session_label =Label(next_frame,text=name,font=("Candara light",12))
-        next_b = Button(master = next_frame, command = lambda : [nex(),op(),retrieve()],height = 2, width = 10,text = "NEXT")
-        session_label.pack(side="bottom",anchor=W,padx=5,pady=5)
-        next_b.pack(side='bottom')
+        session_label =Label(fig,text=name,font=("Candara light",12))
+        next_b = Button(master = fig, command = lambda : [reset(),nex(),op(),retrieve()],height = 2, width = 10,text = "NEXT")
+        session_label.pack(side="bottom",anchor=W)
+        next_b.pack(side='bottom',pady=40)
     else:
         pass
 
@@ -231,15 +195,8 @@ e2.delete("0","end")
 e1.grid(row=0,column=1)
 e2.grid(row=1,column=1)
 
-def on_enter(e):
-   start_b.config(background='white', foreground= "#404040")
-
-def on_leave(e):
-   start_b.config(background= '#404040', foreground= 'White')
-
-start_b = Button(master = canvas,activeforeground="black", command = lambda : [name_admn(),start(),chng_dbs()],height = 2, width = 10,text = "START")
+start_b = Button(master = canvas, command = lambda : [name_admn(),start(),chng_dbs()],height = 2, width = 10,text = "START")
 start_b.pack(pady=40)
-start_b.bind('<Enter>', on_enter)
-start_b.bind('<Leave>', on_leave)
+
 
 canvas.mainloop()
