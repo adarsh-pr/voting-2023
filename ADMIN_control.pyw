@@ -127,14 +127,10 @@ def add():
                 global can_name
                 if count>1:
                     submit_b.config(state='normal')
-                if can_name != '':
-                    name_p=name_post.replace(" ","_")
-                    value_table="insert into {} values('{}','{}',{});".format(name_p,can_name,cand_id,curr_vote)
-                    print(value_table)
-                    mycursor.execute(value_table)
-                    postlist.append([can_name,cand_id,curr_vote])
-                else:
-                    pass
+                name_p=name_post.replace(" ","_")
+                value_table="insert into {} values('{}','{}',{});".format(name_p,can_name,cand_id,curr_vote)
+                mycursor.execute(value_table)
+                postlist.append([can_name,cand_id,curr_vote])
 
             def reset():
                 for widget in topp.winfo_children():
@@ -146,7 +142,7 @@ def add():
             
             next_b = Button(master = topp,relief='flat',command =lambda: [nex(),reset()],state='disabled', height =1 , width = 25,text = "Add")
             next_b.pack(pady = 10)
-            submit_b = Button(master = topp,relief='flat',command =lambda: [nex(),topp.destroy(),lift()],state='disabled', height = 1, width = 25,text = "Proceed to next post")
+            submit_b = Button(master = topp,relief='flat',command =lambda: [topp.destroy(),lift()],state='disabled', height = 1, width = 25,text = "Proceed to next post")
             submit_b.pack(pady = 10)
             finish_b.config(state='normal')
             topp.mainloop()
