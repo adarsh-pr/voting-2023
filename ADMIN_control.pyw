@@ -73,12 +73,10 @@ def add():
         post_assign=post_table.format(namepost)
         try:
             mycursor.execute(post_assign)
-
         except:
             messagebox.showerror('Error, Try again',"Couldn't create post!")
 
         else:
-            
             topp=Toplevel()
             titl=name_post.title()
             topp.title(titl)
@@ -126,11 +124,13 @@ def add():
                 cand_id = 'CID'+ str(count)
                 symbo.config(text="Select Candidate Symbol",state='normal')
                 next_b.config(text="Candidate Added !",state='disabled')
+                global can_name
                 if count>1:
                     submit_b.config(state='normal')
                 if can_name != '':
                     name_p=name_post.replace(" ","_")
                     value_table="insert into {} values('{}','{}',{});".format(name_p,can_name,cand_id,curr_vote)
+                    print(value_table)
                     mycursor.execute(value_table)
                     postlist.append([can_name,cand_id,curr_vote])
                 else:
@@ -307,6 +307,7 @@ def modify():
         postname=[]
         for i in mycursor:
             postname.append(i[0])
+        print(postname)
         if postname != []:
             clicked = StringVar()
             clicked.set( "Select Post Name" )
@@ -344,7 +345,6 @@ def modify():
                 shutil.rmtree(final_dir)
                 messagebox.showinfo('Delete message','Database deleted!')
                 mod.destroy()
-                close()
             except:
                 messagebox.showerror('Delete error','No Database found!')
                 mod.destroy()
@@ -364,19 +364,14 @@ def modify():
                 mycursor.execute(query)
                 mod.destroy()
                 messagebox.showinfo('Delete message','List deleted!')
-                close()
             else:
                 mod.destroy()
-    
-    def close():
-        mod.destroy()
-        window.destroy()
+
 
 
     del_post = Button(master = mod, relief='flat',command = d_post,height = 2, width = 25,text = "REMOVE POST").pack(pady=10)
     del_datab = Button(master = mod, relief='flat',command = d_datb,height = 2, width = 25,text = "DELETE EXISTING DATABASE").pack(pady=10)
     del_vsl = Button(master = mod, relief='flat',command = d_vsl,height = 2, width = 25,text = "DELETE VOTERS LIST").pack(pady=10)
-    close_b = Button(master = mod, relief='flat',command = close,height = 2, width = 25,text = "CLOSE").pack(pady=10)
 
 
 def save():
@@ -464,39 +459,48 @@ def window_destroy():
 
 def realtime():
     current = []
-    mycursor.execute("use voters_list;")
-    query="select * from list;"
-    mycursor.execute(query)
-    files=mycursor.fetchall()
-    temp=[]
     try:
+        mycursor.execute("use voters_list;")
+        query="select * from list;"
+        mycursor.execute(query)
+    except:
         tex1.delete("1.0","end")
         tex2.delete("1.0","end")
-        tex3.delete("1.0","end")
-    except:
-        pass
-
-    for i in files:
-        if i[2] == 0:
-            current.append(i[1])
-        else:
-            temp.append(i)
-    m=1
-    for j in reversed(temp):
-        if m<6:
-            tex2.insert(END,j[1])
-            tex2.insert(END,'\n')
-            m=m+1
-
-    if current != []:
-        for i in current:
-            tex1.insert(END,i)
-            tex1.insert(END,'\n')
+        tex3.delete("1.0","end")       
+        tex1.insert(END,"No Voters Database")
+        tex2.insert(END,"No Voters Database")
+        tex3.insert(END,0)
     else:
-        tex1.insert(END,"No Running Session")
+        files=mycursor.fetchall()
+        temp=[]
+        try:
+            tex1.delete("1.0","end")
+            tex2.delete("1.0","end")
+            tex3.delete("1.0","end")
+        except:
+            pass
 
-    no=len(files)
-    tex3.insert(END,str(no))
+        for i in files:
+            if i[2] == 0:
+                current.append(i[1])
+            else:
+                temp.append(i)
+        m=1
+        for j in reversed(temp):
+            if m<6:
+                tex2.insert(END,j[1])
+                tex2.insert(END,'\n')
+                m=m+1
+
+        if current != []:
+            for i in current:
+                tex1.insert(END,i)
+                tex1.insert(END,'\n')
+        else:
+            tex1.insert(END,"No Running Session")
+
+        no=len(files)
+        tex3.insert(END,str(no))
 
 
 title = Label(master=window , text="ELECTION VOTING SYSTEM")

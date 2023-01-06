@@ -1,7 +1,7 @@
 import mysql.connector
 from tkinter import *
 from tkinter import messagebox
-#from PIL import ImageTk, Image
+from PIL import ImageTk, Image
 import winsound
 
 
@@ -14,7 +14,7 @@ canvas.title("Voting")
 canvas.geometry("480x480")
 icon=PhotoImage(file="logo.png")
 canvas.iconphoto(False,icon)
-canvas.resizable(False,False)
+#canvas.resizable(False,False)
 canvas.configure(background='#181818')
 
 
@@ -111,7 +111,7 @@ def start():
         toplevel.title('SESSION')
         icon=PhotoImage(file="logo.png")
         toplevel.iconphoto(False,icon)
-        toplevel.resizable(False,False)
+        #toplevel.resizable(False,False)
         figure =Frame(toplevel)
         figure.pack(expand=True,fill="both")
         next_frame=Frame(toplevel)
@@ -193,7 +193,7 @@ def start():
                 query = "update {} set vote = vote + 1 where name = '{}'".format(str(last[i-1][0]),str(votelist[i-1]))
                 mycursor.execute(query)
                 mydb.commit()
-        
+                
         a=namevariable.get()
         na=a.capitalize()
         name='Current Session : '+na
