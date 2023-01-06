@@ -26,7 +26,7 @@ except:
 
 window = Tk()
 window.title('ADMIN_CONTROL')
-window.geometry("1200x720")
+window.geometry("1080x720")
 window.resizable(False,False)
 window.configure(background='#181818')
 window.attributes('-fullscreen', True)
