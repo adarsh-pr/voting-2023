@@ -105,6 +105,7 @@ def add():
                         symbo.config(text='Symbol Uploaded !',state='disabled')
                     else:
                         messagebox.showerror('Error, Try again',"Select A Candidate Symbol")
+                        topp.lift(window)
                 else:
                     messagebox.showerror('Error, Try again',"Type Candidate name")
                     topp.lift(window)
