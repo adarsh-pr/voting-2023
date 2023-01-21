@@ -165,7 +165,7 @@ def add():
     
 
 def result():
-
+    mycursor.execute("use projectx;")
     mycursor.execute("Show tables;")
     postname=[]
     for i in mycursor:

@@ -109,6 +109,7 @@ def value():
     mydb.commit()
 
 def start():
+    fla=False
     if flag == 0:
         fig = Toplevel()
         fig.geometry('720x720')
@@ -175,7 +176,8 @@ def start():
                 e2.delete("0","end")
                 winsound.Beep(1000,500)
                 fig.destroy()
-                messagebox.showinfo('Session Closed','Thank You :)')
+                nonlocal fla
+                fla=True
 
         def retrieve():
                 opt=opted.get()
@@ -183,8 +185,12 @@ def start():
                 votelist.append(opt)
                 mycursor.execute("use projectx;")
                 query = "update {} set vote = vote + 1 where name = '{}'".format(str(last[i-1][0]),str(votelist[i-1]))
+                print(query)
                 mycursor.execute(query)
                 mydb.commit()
+                nonlocal fla
+                if fla == True:
+                    messagebox.showinfo('Session Closed','Thank You :)')
                 
         a=namevariable.get()
         na=a.capitalize()
