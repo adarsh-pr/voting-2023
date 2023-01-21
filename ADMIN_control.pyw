@@ -69,7 +69,7 @@ def add():
         name_post = text1.get()
         name_post_sl= name_post.replace(" ","_")
         namepost=name_post_sl.upper()
-        post_table=("create table {} (name char(15),CID char(5) primary key,vote int(3))")
+        post_table=("create table {} (name char(75),CID char(5) primary key,vote int(3))")
         post_assign=post_table.format(namepost)
         try:
             mycursor.execute(post_assign)
