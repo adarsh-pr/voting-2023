@@ -1,20 +1,16 @@
 import mysql.connector
 from tkinter import *
 from tkinter import messagebox
-from PIL import ImageTk, Image
 import winsound
 
-with open("appCache/server details.txt","r") as f:
-    ip=f.read()
-
-
-mydb=mysql.connector.connect(host=ip,user='root',passwd='tiger')
+mydb=mysql.connector.connect(host='localhost',user='root',passwd='tiger')
 mycursor=mydb.cursor()
 
 canvas=Tk()
 canvas.title("Voting")
 canvas.geometry("480x480")
-icon=PhotoImage(file="logo.png")
+img=b'iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEdUlEQVR4nO2aS4gVRxSGPxUno8KEQBBFo5jFQEAFXTi+XSWCSCQRsjVkEUQk6G5ABRU1I+pCXZhkE9wEQiDRhVGzSEAjQgjkJWrQXRwFB/EFKjLacuTvULbdfbv7dnX3jPeH4vatOt116u86p+qcauigA5/oAvYC14GghnIP+B7opSYM1DTwaLkFTK+DgEEpsLii/r5Tfz8CbwHTgBOq+5YaEKhUhdvqz33b01V3h1eAgCChv6r1yNVxXnvO8qys9d7RIYCOCdDxAVSHxvqAoOKSpEflCDoEUCrzrd5kY2dA1QQU2UN4QbRjiw4/V4xwQ5FiVxvPaxwB44B5wGdOYBK0iA6NEN8m4A3dwDJgC3ASuNuCeTc6XKrrazEDSLq/dgJeB1YBe4CzwKMYZa8AXwOfpBCwVMQFqvNNQGFTmAp8BBwC/gSGIw96ovpDkpvaQqG6TCAXAROBrcDlmBvtjf8qpVdpRuRRuEskDCpNNuDJCRa59zneAP5whO/Kts3Gl8vmR8IyWFiXbyT0AFgjr94OmkDAeOCA07ZfdS/B8mdPI4nEPTF2XUThqosLd/Bh2Ren7Ptq/Bc4F7F78+pzRigBQ87Ks0TXN+OUXa3Gn/R/kTYzoee32XEaeBcYk5OAshA+z3Tqc+r7IitUmg6JOvWq4b9I/Sx56zvOzX8Bn2Zwir4IsHIJmAC8BlxImQGZCRirkxRrnJywQvQ7m5lA1/1qS1O47Fjgon73qrh1SQSkmcn/OKPGlSTDFF6nWRA+7L42Q29HZH1thMIp75a+Mgg4qEZ7q1lg/uCUs3oMy28sSiCgzFggfPPhTIjrL64ulYB1BY+RZgM/R5Q+5zkW8ELAXCegyYvzuveU9hBBw0wg6f8LsB3SQ03pHrIjnM5DiiUmARs9xgJFnGDS/5fwmwRWkB3Hdc/2ipfB7jKXwRBfSmAT2dCrsNhmzpSKCLApv8Cpnw88LouA9RI4mlGpryR/JEXhqktbBCyQwD8ZBj9ZkaP5jHdGCwHdmk7Dcmhp2KmH/ZDQ7ssE8rTnJsDwt4RcO4tiohNpWZQ1qgg4KiHzB0nYIJnzDTwXaJuATRKyFSEOlim6Kpm1ORSqIylaiIDlErI9QRzWqv1qi7RZE84FChHQI8/+MCF/Fm57zQwoQECV5wKFCEDxQKD4IG3by2g0ARQRmuDHvIhjqrclsBWacC5QmIB+CVqOILrtfRSz7S2icF5USsB7ErQsUTRO+KIkhRtNwJtOumtshm1vmkJVl1IIQBniQFN/h67NBzACCUiTSUT4kcO2yAFDEmYCHwK7lRlqkgkUImC1hJ/GbHtnRAY71G5nTfMBIQ47N9nS9buOluIGelOnybuADxoSC4QfcfSoBKrLDNvqbna+xQ/LkN78bg12RkM3Qr/E5A8tg50blidYqFzhzIIK1xELJGWQK0FTvhGKO0OoBE0wgXD2hm15v3JpCyPuG6Gy0YRl0JcumeDafBlIG0ScT6kdAymOzVfJ41O8w7V53wMfLOBTOuBVxzPzpNeMcCaEUgAAAABJRU5ErkJggg=='
+icon=PhotoImage(data=img)
 canvas.iconphoto(False,icon)
 canvas.resizable(False,False)
 canvas.configure(background='#181818')
@@ -92,8 +88,8 @@ def name_admn():
                 mydb.commit()
             except:
                 flag=1
+                winsound.Beep(1000,3000)
                 messagebox.showinfo('SORRY','YOU HAVE ALREADY VOTED')
-                winsound.Beep(1000,1000)
         else:
             flag=1
             winsound.Beep(1000,1000)
@@ -114,7 +110,8 @@ def start():
         fig = Toplevel()
         fig.geometry('720x720')
         fig.title('SESSION')
-        icon=PhotoImage(file="logo.png")
+        img=b'iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEdUlEQVR4nO2aS4gVRxSGPxUno8KEQBBFo5jFQEAFXTi+XSWCSCQRsjVkEUQk6G5ABRU1I+pCXZhkE9wEQiDRhVGzSEAjQgjkJWrQXRwFB/EFKjLacuTvULbdfbv7dnX3jPeH4vatOt116u86p+qcauigA5/oAvYC14GghnIP+B7opSYM1DTwaLkFTK+DgEEpsLii/r5Tfz8CbwHTgBOq+5YaEKhUhdvqz33b01V3h1eAgCChv6r1yNVxXnvO8qys9d7RIYCOCdDxAVSHxvqAoOKSpEflCDoEUCrzrd5kY2dA1QQU2UN4QbRjiw4/V4xwQ5FiVxvPaxwB44B5wGdOYBK0iA6NEN8m4A3dwDJgC3ASuNuCeTc6XKrrazEDSLq/dgJeB1YBe4CzwKMYZa8AXwOfpBCwVMQFqvNNQGFTmAp8BBwC/gSGIw96ovpDkpvaQqG6TCAXAROBrcDlmBvtjf8qpVdpRuRRuEskDCpNNuDJCRa59zneAP5whO/Kts3Gl8vmR8IyWFiXbyT0AFgjr94OmkDAeOCA07ZfdS/B8mdPI4nEPTF2XUThqosLd/Bh2Ren7Ptq/Bc4F7F78+pzRigBQ87Ks0TXN+OUXa3Gn/R/kTYzoee32XEaeBcYk5OAshA+z3Tqc+r7IitUmg6JOvWq4b9I/Sx56zvOzX8Bn2Zwir4IsHIJmAC8BlxImQGZCRirkxRrnJywQvQ7m5lA1/1qS1O47Fjgon73qrh1SQSkmcn/OKPGlSTDFF6nWRA+7L42Q29HZH1thMIp75a+Mgg4qEZ7q1lg/uCUs3oMy28sSiCgzFggfPPhTIjrL64ulYB1BY+RZgM/R5Q+5zkW8ELAXCegyYvzuveU9hBBw0wg6f8LsB3SQ03pHrIjnM5DiiUmARs9xgJFnGDS/5fwmwRWkB3Hdc/2ipfB7jKXwRBfSmAT2dCrsNhmzpSKCLApv8Cpnw88LouA9RI4mlGpryR/JEXhqktbBCyQwD8ZBj9ZkaP5jHdGCwHdmk7Dcmhp2KmH/ZDQ7ssE8rTnJsDwt4RcO4tiohNpWZQ1qgg4KiHzB0nYIJnzDTwXaJuATRKyFSEOlim6Kpm1ORSqIylaiIDlErI9QRzWqv1qi7RZE84FChHQI8/+MCF/Fm57zQwoQECV5wKFCEDxQKD4IG3by2g0ARQRmuDHvIhjqrclsBWacC5QmIB+CVqOILrtfRSz7S2icF5USsB7ErQsUTRO+KIkhRtNwJtOumtshm1vmkJVl1IIQBniQFN/h67NBzACCUiTSUT4kcO2yAFDEmYCHwK7lRlqkgkUImC1hJ/GbHtnRAY71G5nTfMBIQ47N9nS9buOluIGelOnybuADxoSC4QfcfSoBKrLDNvqbna+xQ/LkN78bg12RkM3Qr/E5A8tg50blidYqFzhzIIK1xELJGWQK0FTvhGKO0OoBE0wgXD2hm15v3JpCyPuG6Gy0YRl0JcumeDafBlIG0ScT6kdAymOzVfJ41O8w7V53wMfLOBTOuBVxzPzpNeMcCaEUgAAAABJRU5ErkJggg=='
+        icon=PhotoImage(data=img)
         fig.iconphoto(False,icon)
         post_n=last[0][0]
         post_nn=post_n.upper()
@@ -136,6 +133,7 @@ def start():
             label.image=img
             label.pack(padx=5,side=LEFT)
             count=count+1
+
         def reset():
             for widget in fig.winfo_children():
                 if not isinstance(widget, Button):
@@ -178,14 +176,15 @@ def start():
                 fig.destroy()
                 nonlocal fla
                 fla=True
+                global votelist
+                votelist=[]
 
         def retrieve():
                 opt=opted.get()
                 global votelist
                 votelist.append(opt)
                 mycursor.execute("use projectx;")
-                query = "update {} set vote = vote + 1 where name = '{}'".format(str(last[i-1][0]),str(votelist[i-1]))
-                print(query)
+                query = "update {} set vote = vote + 1 where name = '{}'".format(str(last[i][0]),str(votelist[i]))
                 mycursor.execute(query)
                 mydb.commit()
                 nonlocal fla
@@ -196,9 +195,10 @@ def start():
         na=a.capitalize()
         name='Current Session : '+na
         session_label =Label(fig,text=name,font=("Candara light",12))
-        next_b = Button(master = fig, command = lambda : [reset(),nex(),op(),retrieve()],height = 2, width = 10,text = "NEXT")
+        next_b = Button(master = fig, command = lambda : [retrieve(),reset(),nex(),op()],height = 2, width = 10,text = "NEXT")
         session_label.pack(side="bottom",anchor=W,padx=5,pady=5)
         next_b.pack(side='bottom',pady=5)
+        
     else:
         pass
 
