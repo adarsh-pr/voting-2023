@@ -1,0 +1,98 @@
+<html><head><style>body {
+   background: #181818;
+   color: white;
+   margin: 50;
+}
+</style></head><body><div align="center">
+
+  <h1> Election Voting System Using Python and tkinter</h1>
+
+<sub>Authors: <a>CS batch  2022-2023</a><br>
+<small>KENDRIYA VIDYALAYA KALPETTA</small></sub>
+
+</div>
+
+<h1 id="introduction">Introduction</h1>
+<ul>
+<li>Minimal yet powerful app for organisation Elections completely programmed using Python-3 and frontend using Python-tkinter.</li>
+<li>Data entry using Python and tkinter into Database managed by Mysql.</li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+<li>Admin level Permissions protected by four digit passcode.</li>
+<li>Completely customizable.</li>
+<li>Save Voters list and Vote counts as csv file.</li>
+<li>Result in Pie and Bar graphs.</li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<p>To get along with the challenge you need to have the following:</p>
+<ul>
+<li>Supported OS - Windows</li>
+<li>Python-3</li>
+<li>MySQL</li>
+<li>Python Modules mentioned below</li>
+<li>A code editor (preferably Vs-Code)</li>
+<li>Custom Font (Optional,Mentioned below)</li>
+</ul>
+<h2 id="note-important-">NOTE  (IMPORTANT)</h2>
+<ul>
+<li><p>Run the below code in remote client PC(s) for mysql connectivity.  (&#39;tiger&#39; is the mysql passwd set in the admin/server PC)</p>
+<pre><code class="lang-sh">&gt;  create user <span class="hljs-string">'root'</span>@<span class="hljs-string">'%'</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">'tiger'</span>;
+&gt;  grant <span class="hljs-literal">all</span> privileges <span class="hljs-keyword">on</span> *.* <span class="hljs-keyword">to</span> <span class="hljs-string">'root'</span>@<span class="hljs-string">'%'</span>;
+</code></pre>
+</li>
+<li><p>For independent usage of client side make sure you copy the appCache folder created by the Admin application to the same folder to client application.  (appCache folder will only be created after creating posts and adding canditate details.)</p>
+</li>
+<li><p>appCache contains Candidates Symbols and ip address of Server.</p>
+</li>
+</ul>
+<h3 id="snapdrop">SnapDrop</h3>
+<p>To share files between PC within same network, use snapdrop.net .</p>
+<h3 id="install-python-3-preferably-3-10-">Install Python 3 (preferably 3.10)</h3>
+<p>Entire code runs on Python. Install Python for windows
+After downloading double click and install
+We can check if node is installed on our local machine by opening our device terminal or command prompt.</p>
+<pre><code class="lang-sh">admin $ python --version
+Python <span class="hljs-number">3.10</span><span class="hljs-number">.7</span>
+</code></pre>
+<h3 id="download-git-repository">Download git repository</h3>
+<p>Download ZIP and extract OR</p>
+<h3 id="clone-git-repository">Clone git repository</h3>
+<p>Open git Bash.
+Change the current working directory to the location where you want the cloned directory.</p>
+<pre><code class="lang-sh">$ git clone <span class="hljs-string">https:</span><span class="hljs-comment">//github.com/nik1856nik/voting-2023</span>
+&gt; Cloning into `Election<span class="hljs-number">-2023</span>-KVK`...
+&gt; <span class="hljs-string">remote:</span> Counting <span class="hljs-string">objects:</span> <span class="hljs-number">10</span>, done.
+&gt; <span class="hljs-string">remote:</span> Compressing <span class="hljs-string">objects:</span> <span class="hljs-number">100</span>% (<span class="hljs-number">8</span>/<span class="hljs-number">8</span>), done.
+&gt; <span class="hljs-string">remove:</span> Total <span class="hljs-number">10</span> (delta <span class="hljs-number">1</span>), reused <span class="hljs-number">10</span> (delta <span class="hljs-number">1</span>)
+&gt; Unpacking <span class="hljs-string">objects:</span> <span class="hljs-number">100</span>% (<span class="hljs-number">10</span>/<span class="hljs-number">10</span>), done.
+</code></pre>
+<h3 id="install-all-required-python-3-modules-">Install All Required Python 3 Modules.</h3>
+<p>Modules</p>
+<ul>
+<li>matplotlib</li>
+<li>mysql-connector</li>
+<li>tkinter</li>
+<li>beepy</li>
+</ul>
+<p>Using autorun.bat to install all required modules (Windows)</p>
+<p>Double-Click on autorun.bat in voting-2023.</p>
+<p>Now, Click any key to close cmd window.</p>
+<p>OR</p>
+<p>You can install modules using PIP</p>
+<pre><code>pip <span class="hljs-keyword">install</span> <span class="hljs-keyword">MODULE</span>-<span class="hljs-keyword">NAME</span>
+</code></pre><h3 id="install-custom-fonts-optional-">Install Custom Fonts (Optional)</h3>
+<h4 id="fonts-used">Fonts used</h4>
+<ul>
+<li>Queental</li>
+<li>Consolas Bold</li>
+<li>Candara Light</li>
+</ul>
+<h2 id="note">NOTE</h2>
+<h3 id="default-setup">Default setup</h3>
+<ul>
+<li>Make sure you have mysql-connector-python installed and configured.</li>
+<li>The default passcode for admin side is set as 1080. To change passcode, make changes in main.py</li>
+<li>MySQL user and passwd is &#39;root&#39; and &#39;tiger&#39; respectively, You might need to change in ADMIN_control.pyw and in Client_side.pyw.</li>
+</ul>
+</body></html>

@@ -568,9 +568,9 @@ def admin():
 
     refresh_b = Button(master = subbutton2, command = realtime,relief='flat',height = 1, width = 10,text = "Refresh").pack(pady = 15)
 
-    credit=Label(cred,text='''Project Done By: ADARSH PR, KARTHIK KRISHNA, RIYA RAJESH
-                                KENDRIYA VIDYALAYA KALPETTA
-                                            Year : 2022-2023''')
+    credit=Label(cred,text=''' Project Done By: ADARSH PR, KARTHIK KRISHNA, RIYA RAJESH
+                    CS BATCH - KENDRIYA VIDYALAYA KALPETTA
+                                          Year : 2022-2023''')
     credit.pack(side='right',anchor='e')
 
 
